@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Code2, ExternalLink } from 'lucide-react'
+import { Code2, ExternalLink } from 'lucide-react'
 import { projects } from '@/lib/projects'
 import { GithubIcon } from '@/components/ui/BrandIcons'
 

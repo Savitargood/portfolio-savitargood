@@ -1,5 +1,3 @@
-import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
-
 export default function Footer() {
   return (
     <footer className="border-t border-ink-border/40 py-8">
