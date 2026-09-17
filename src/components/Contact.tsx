@@ -1,17 +1,28 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { Mail, Phone, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
 
-interface FormState {
-  name: string
-  email: string
-  message: string
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.6, ease: 'easeOut' },
+  }),
 }
+
+const contactRows = [
+  { icon: Mail,     label: 'silasvictor90oliveira@gmail.com', href: 'mailto:silasvictor90oliveira@gmail.com' },
+  { icon: Phone,    label: '(61) 98354-6385',                 href: 'https://wa.me/5561983546385' },
+  { icon: LinkedinIcon, label: 'linkedin.com/in/silas-victor', href: 'https://linkedin.com/in/silas-victor' },
+  { icon: GithubIcon,   label: 'github.com/Savitargood',       href: 'https://github.com/Savitargood' },
+]
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 export default function Contact() {
-  const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -42,154 +53,189 @@ export default function Contact() {
   }
 
   const inputClass =
-    'w-full bg-slate-900/60 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all duration-200'
+    'w-full bg-white/[0.03] border border-ink-border rounded-lg px-4 py-2.5 text-sm text-white ' +
+    'placeholder-slate-600 focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/40 ' +
+    'transition-all duration-200'
 
   return (
-    <section id="contact" className="py-24">
-      <div className="section-container max-w-2xl">
-        <motion.p
-          className="section-subtitle text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          Vamos conversar
-        </motion.p>
-        <motion.h2
-          className="section-title text-center mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-        >
-          Contato
-        </motion.h2>
-        <motion.p
-          className="text-slate-400 text-center mb-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          Tem um projeto em mente ou quer bater um papo? Me manda uma mensagem!
-        </motion.p>
-
-        <motion.form
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="glass-card p-8 space-y-5"
-          aria-label="Formulário de contato"
-        >
-          <div className="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="name" className="block text-sm text-slate-400 mb-1.5">
-                Nome *
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Seu nome"
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm text-slate-400 mb-1.5">
-                E-mail *
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={handleChange}
-                placeholder="seu@email.com"
-                className={inputClass}
-              />
-            </div>
-          </div>
-
+    <section id="contact" className="py-24 border-t border-ink-border/40">
+      <div className="section-container">
+        <div className="grid lg:grid-cols-2 gap-14">
+          {/* Left */}
           <div>
-            <label htmlFor="message" className="block text-sm text-slate-400 mb-1.5">
-              Mensagem *
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows={5}
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Olá Silas, gostaria de..."
-              className={`${inputClass} resize-none`}
-            />
+            <motion.span
+              className="badge-pill-accent"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={0}
+              variants={fadeUp}
+            >
+              <span className="badge-dot" />
+              Contato
+            </motion.span>
+
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={1}
+              variants={fadeUp}
+              className="mt-5 font-serif text-4xl font-extrabold leading-[1.15] text-white"
+            >
+              Pronto para seu
+              <br />
+              <span className="italic text-accent">próximo projeto?</span>
+            </motion.h2>
+
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={2}
+              variants={fadeUp}
+              className="mt-5 text-sm leading-relaxed text-slate-400 max-w-sm"
+            >
+              Estou disponível para estágios, posições júnior, freelances e
+              consultoria técnica. Se tem um desafio, quero ouvir.
+            </motion.p>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={3}
+              variants={fadeUp}
+              className="mt-8 space-y-3"
+            >
+              {contactRows.map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3.5 text-[13px] text-slate-400 hover:text-accent transition-colors group"
+                >
+                  <span className="flex items-center justify-center w-9 h-9 rounded-lg border border-ink-border bg-white/[0.02] text-slate-500 group-hover:text-accent group-hover:border-accent/40 transition-colors">
+                    <Icon size={14} />
+                  </span>
+                  {label}
+                </a>
+              ))}
+            </motion.div>
           </div>
 
-          {status === 'success' && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 text-green-400 text-sm"
-            >
-              <CheckCircle size={16} />
-              Mensagem enviada com sucesso! Responderei em breve.
-            </motion.div>
-          )}
-
-          {status === 'error' && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 text-red-400 text-sm"
-            >
-              <AlertCircle size={16} />
-              {errorMsg}
-            </motion.div>
-          )}
-
-          <motion.button
-            type="submit"
-            disabled={status === 'loading'}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+          {/* Right — form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={2}
+            variants={fadeUp}
+            className="space-y-5"
+            aria-label="Formulário de contato"
           >
-            {status === 'loading' ? (
-              <>
-                <Loader2 size={18} className="animate-spin" />
-                Enviando...
-              </>
-            ) : (
-              <>
-                <Send size={18} />
-                Enviar mensagem
-              </>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="name" className="block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">
+                  Nome
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Seu nome"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">
+                  E-mail
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="seu@email.com"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">
+                Mensagem
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={6}
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Descreva a oportunidade ou projeto..."
+                className={`${inputClass} resize-none`}
+              />
+            </div>
+
+            {status === 'success' && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-emerald-400 text-xs"
+              >
+                <CheckCircle size={14} />
+                Mensagem enviada com sucesso! Responderei em breve.
+              </motion.p>
             )}
-          </motion.button>
-        </motion.form>
+            {status === 'error' && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-red-400 text-xs"
+              >
+                <AlertCircle size={14} />
+                {errorMsg}
+              </motion.p>
+            )}
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 text-center"
-        >
-          <a
-            href="mailto:contato@silasvictor.dev"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-brand-400 transition-colors text-sm"
-          >
-            <Mail size={16} />
-            contato@silasvictor.dev
-          </a>
-        </motion.div>
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-accent text-ink text-sm font-bold hover:bg-accent-dim transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === 'loading' ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  Enviar mensagem
+                  <Send size={14} />
+                </>
+              )}
+            </button>
+
+            <p className="text-center text-[11px] text-slate-600">
+              Também pode me chamar diretamente pelo{' '}
+              <a href="https://linkedin.com/in/silas-victor" target="_blank" rel="noopener noreferrer" className="text-accent/80 hover:text-accent underline underline-offset-2">
+                LinkedIn
+              </a>{' '}
+              ou{' '}
+              <a href="https://wa.me/5561983546385" target="_blank" rel="noopener noreferrer" className="text-accent/80 hover:text-accent underline underline-offset-2">
+                WhatsApp
+              </a>
+            </p>
+          </motion.form>
+        </div>
       </div>
     </section>
   )

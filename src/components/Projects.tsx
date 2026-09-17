@@ -1,134 +1,137 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Star } from 'lucide-react'
-import { GithubIcon } from '@/components/ui/BrandIcons'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, Code2 } from 'lucide-react'
 import { projects } from '@/lib/projects'
+import { GithubIcon } from '@/components/ui/BrandIcons'
 
-const ALL_TAGS = ['Todos', ...Array.from(new Set(projects.flatMap(p => p.tags)))]
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.6, ease: 'easeOut' },
+  }),
+}
 
 export default function Projects() {
-  const [filter, setFilter] = useState('Todos')
-  const visible = filter === 'Todos' ? projects : projects.filter(p => p.tags.includes(filter))
-
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-900/5 to-transparent" />
-      <div className="section-container relative">
-        <motion.p
-          className="section-subtitle text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+    <section id="projects" className="py-24 border-t border-ink-border/40">
+      <div className="section-container">
+        {/* Header */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          custom={0}
+          variants={fadeUp}
         >
-          O que eu construí
-        </motion.p>
-        <motion.h2
-          className="section-title text-center mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-        >
-          Projetos
-        </motion.h2>
-
-        {/* Filter chips */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 overflow-x-auto pb-2">
-          {ALL_TAGS.map(tag => (
-            <button
-              key={tag}
-              onClick={() => setFilter(tag)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                filter === tag
-                  ? 'bg-brand-600 text-white'
-                  : 'glass-card text-slate-400 hover:text-white'
-              }`}
+          <span className="badge-pill-accent">
+            <span className="badge-dot" />
+            Projetos práticos
+          </span>
+          <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-serif text-4xl font-extrabold text-white">
+              O que já construí<span className="text-accent">.</span>
+            </h2>
+            <a
+              href="https://github.com/Savitargood"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-accent transition-colors"
             >
-              {tag}
-            </button>
-          ))}
-        </div>
+              <GithubIcon size={13} />
+              Ver no GitHub · @Savitargood
+            </a>
+          </div>
+        </motion.div>
 
         {/* Grid */}
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence>
-            {visible.map((project, i) => (
-              <motion.article
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.07 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="glass-card overflow-hidden group cursor-pointer"
-              >
-                {/* Image placeholder */}
-                <div className="h-44 bg-gradient-to-br from-brand-900/40 to-slate-800/60 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-4xl font-black text-brand-500/30 select-none">
-                      {project.title.charAt(0)}
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {projects.map((project, i) => (
+            <motion.article
+              key={project.id}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              custom={i % 3}
+              variants={fadeUp}
+              whileHover={{ y: -5 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+              className="group rounded-2xl border border-ink-border bg-ink-soft/60 overflow-hidden flex flex-col hover:border-accent/30 transition-colors duration-300"
+            >
+              {/* Image */}
+              <div className="relative h-40 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.04] transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-soft via-transparent to-transparent" />
+                {project.status && (
+                  <span
+                    className={`absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold border ${
+                      project.status === 'Ativo'
+                        ? 'bg-emerald-400/15 text-emerald-300 border-emerald-400/40'
+                        : 'bg-amber-400/15 text-amber-300 border-amber-400/40'
+                    }`}
+                  >
+                    {project.status}
+                  </span>
+                )}
+              </div>
+
+              {/* Body */}
+              <div className="flex flex-col flex-1 p-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                  {project.category}
+                </p>
+                <h3
+                  className={`mt-2 font-serif text-xl font-bold ${
+                    project.accentTitle ? 'text-accent' : 'text-white'
+                  }`}
+                >
+                  {project.title}
+                </h3>
+                <p className="mt-2.5 text-xs leading-relaxed text-slate-500 flex-1">
+                  {project.description}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="tag-chip !text-[10px] !px-2 !py-0.5">
+                      {tag}
                     </span>
-                  </div>
-                  {project.featured && (
-                    <div className="absolute top-3 right-3 flex items-center gap-1 bg-brand-600/90 text-white text-xs px-2 py-1 rounded-full">
-                      <Star size={10} fill="currentColor" />
-                      Destaque
-                    </div>
-                  )}
-                  <motion.div
-                    className="absolute inset-0 bg-brand-600/10"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                  />
+                  ))}
                 </div>
 
-                <div className="p-5">
-                  <h3 className="font-bold text-white mb-2 group-hover:text-brand-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tags.slice(0, 3).map(tag => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-0.5 bg-brand-500/10 text-brand-300 rounded-full border border-brand-500/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-3">
+                <div className="mt-4 flex items-center gap-4">
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/25 hover:bg-accent/20 transition-colors"
+                    >
+                      Ver site
+                      <ArrowUpRight size={11} />
+                    </a>
+                  )}
+                  {project.github && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-white transition-colors"
                     >
-                      <GithubIcon size={14} />
+                      <Code2 size={12} />
                       Código
                     </a>
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-brand-400 hover:text-brand-300 transition-colors"
-                      >
-                        <ExternalLink size={14} />
-                        Demo
-                      </a>
-                    )}
-                  </div>
+                  )}
                 </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   )

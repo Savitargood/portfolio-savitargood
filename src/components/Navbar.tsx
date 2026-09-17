@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Menu, X, Code2 } from 'lucide-react'
 
 const links = [
-  { href: '#about',    label: 'Sobre' },
-  { href: '#skills',   label: 'Habilidades' },
-  { href: '#projects', label: 'Projetos' },
-  { href: '#contact',  label: 'Contato' },
+  { href: '#about',       label: 'Sobre' },
+  { href: '#projects',    label: 'Projetos' },
+  { href: '#experience',  label: 'Experiência' },
+  { href: '#contact',     label: 'Contato' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
-  const bgOpacity = useTransform(scrollY, [0, 80], [0, 1])
+  const bgOpacity = useTransform(scrollY, [0, 60], [0, 1])
 
   useEffect(() => {
-    const unsub = scrollY.on('change', v => setScrolled(v > 40))
+    const unsub = scrollY.on('change', v => setScrolled(v > 20))
     return unsub
   }, [scrollY])
 
@@ -26,30 +25,33 @@ export default function Navbar() {
       style={{ backdropFilter: scrolled ? 'blur(16px)' : 'none' }}
     >
       <motion.div
-        className="absolute inset-0 bg-slate-950/80 border-b border-white/5"
+        className="absolute inset-0 bg-ink/85 border-b border-ink-border/60"
         style={{ opacity: bgOpacity }}
       />
       <nav className="relative section-container flex items-center justify-between h-16">
-        <a href="#" className="flex items-center gap-2 font-bold text-white text-lg">
-          <Code2 className="text-brand-400" size={22} />
-          <span>Silas<span className="text-brand-400">Victor</span></span>
+        <a href="#" className="flex items-center gap-2 font-serif font-bold text-white">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+          Silas Victor
         </a>
 
         {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-7">
           {links.map(l => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200"
+                className="text-slate-400 hover:text-white text-[13px] font-medium transition-colors duration-200"
               >
                 {l.label}
               </a>
             </li>
           ))}
           <li>
-            <a href="#contact" className="btn-primary text-sm py-2 px-4">
-              Hire me
+            <a
+              href="#contact"
+              className="inline-block px-4 py-2 rounded-lg border border-accent/50 text-accent text-[13px] font-semibold hover:bg-accent/10 transition-colors duration-200"
+            >
+              Contratar
             </a>
           </li>
         </ul>
@@ -58,9 +60,11 @@ export default function Navbar() {
         <button
           className="md:hidden text-slate-400 hover:text-white"
           onClick={() => setOpen(o => !o)}
-          aria-label="Toggle menu"
+          aria-label="Abrir menu"
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {open ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          </svg>
         </button>
       </nav>
 
@@ -69,7 +73,7 @@ export default function Navbar() {
         initial={false}
         animate={open ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="md:hidden overflow-hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/5"
+        className="md:hidden overflow-hidden bg-ink-soft/95 backdrop-blur-xl border-b border-ink-border/60"
       >
         <ul className="section-container py-4 flex flex-col gap-4">
           {links.map(l => (

@@ -1,103 +1,137 @@
 import { motion } from 'framer-motion'
-import { Code2, GraduationCap, Rocket } from 'lucide-react'
+import { Code2, Layers, Wrench, Globe } from 'lucide-react'
+import { skillGroups, languages } from '@/lib/skills'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: 'easeOut' },
+    transition: { delay: i * 0.12, duration: 0.6, ease: 'easeOut' },
   }),
 }
 
-const highlights = [
-  { icon: GraduationCap, title: 'ADS', desc: 'Estudante de Análise e Desenvolvimento de Sistemas' },
-  { icon: Code2,         title: 'Front-End', desc: 'React, TypeScript, Tailwind CSS, Framer Motion' },
-  { icon: Rocket,        title: 'Projetos Reais', desc: 'Sites e apps publicados para clientes reais' },
-]
+const groupIcons: Record<string, typeof Code2> = {
+  code: Code2,
+  layers: Layers,
+  wrench: Wrench,
+}
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-900/5 to-transparent" />
-      <div className="section-container relative">
-        <motion.p
-          className="section-subtitle text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={0}
-          variants={fadeUp}
-        >
-          Quem sou eu
-        </motion.p>
-        <motion.h2
-          className="section-title text-center mb-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={1}
-          variants={fadeUp}
-        >
-          Sobre mim
-        </motion.h2>
+    <section id="about" className="py-24 border-t border-ink-border/40">
+      <div className="section-container">
+        <div className="grid lg:grid-cols-2 gap-14">
+          {/* Left — text */}
+          <div>
+            <motion.span
+              className="badge-pill-accent"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={0}
+              variants={fadeUp}
+            >
+              <span className="badge-dot" />
+              Sobre mim
+            </motion.span>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Text */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={2}
-            variants={fadeUp}
-            className="space-y-5 text-slate-300 leading-relaxed"
-          >
-            <p>
-              Sou <strong className="text-white">Silas Victor</strong>, desenvolvedor Front-End
-              apaixonado por criar experiências digitais que combinam design bonito com código limpo.
-            </p>
-            <p>
-              Estudo Análise e Desenvolvimento de Sistemas e já entreguei projetos reais para
-              clientes — de sites institucionais a assistentes de IA com integração OpenAI.
-            </p>
-            <p>
-              Meu foco atual é dominar o ecossistema React/TypeScript e construir um portfólio
-              sólido enquanto busco minha primeira oportunidade profissional.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Supabase', 'Vite', 'Git'].map(t => (
-                <span
-                  key={t}
-                  className="px-3 py-1 text-xs font-mono bg-brand-500/10 text-brand-300 border border-brand-500/20 rounded-full"
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={1}
+              variants={fadeUp}
+              className="mt-5 font-serif text-4xl font-extrabold leading-[1.15] text-white"
+            >
+              Código que <span className="italic text-accent">resolve,</span>
+              <br />
+              design que
+              <br />
+              <span className="italic text-slate-500 font-semibold">comunica.</span>
+            </motion.h2>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={2}
+              variants={fadeUp}
+              className="mt-6 space-y-4 text-sm leading-relaxed text-slate-400"
+            >
+              <p>
+                Sou estudante de Análise e Desenvolvimento de Sistemas na
+                Universidade Católica, com experiência prática não em
+                desenvolvimento full stack e suporte técnico de infraestrutura.
+              </p>
+              <p>
+                Já atuei diretamente na criação de plataformas web do zero —
+                desde a arquitetura até a publicação, produção — e na resolução
+                de incidentes complexos em ambientes corporativos.
+              </p>
+              <p>
+                Meu diferencial é a combinação entre raciocínio técnico de
+                infraestrutura e habilidade de construir interfaces modernas com
+                React e JavaScript.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Right — skill groups */}
+          <div className="space-y-7 lg:pt-2">
+            {skillGroups.map((group, i) => {
+              const Icon = groupIcons[group.icon] ?? Code2
+              return (
+                <motion.div
+                  key={group.label}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  custom={i + 1}
+                  variants={fadeUp}
                 >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+                  <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-3">
+                    <Icon size={13} className="text-accent" />
+                    {group.label}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map(skill => (
+                      <span key={skill} className="tag-chip">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            })}
 
-          {/* Cards */}
-          <div className="grid gap-4">
-            {highlights.map(({ icon: Icon, title, desc }, i) => (
-              <motion.div
-                key={title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={i + 3}
-                variants={fadeUp}
-                whileHover={{ x: 6 }}
-                className="glass-card p-5 flex items-start gap-4"
-              >
-                <div className="p-2 bg-brand-500/10 rounded-lg shrink-0">
-                  <Icon className="text-brand-400" size={22} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white mb-1">{title}</h3>
-                  <p className="text-slate-400 text-sm">{desc}</p>
-                </div>
-              </motion.div>
-            ))}
+            {/* Languages */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={4}
+              variants={fadeUp}
+            >
+              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-3">
+                <Globe size={13} className="text-accent" />
+                Idiomas
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {languages.map(lang => (
+                  <div
+                    key={lang.name}
+                    className="px-4 py-3 rounded-xl border border-ink-border bg-white/[0.02]"
+                  >
+                    <p className="text-[13px] font-bold text-slate-200">
+                      <span className="mr-1.5">{lang.flag}</span>
+                      {lang.name}
+                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5">{lang.level}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

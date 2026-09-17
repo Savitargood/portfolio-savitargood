@@ -17,10 +17,6 @@ vi.mock('framer-motion', () => ({
     },
   ),
   AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useScroll: () => ({ scrollY: { on: vi.fn(() => vi.fn()), get: vi.fn(() => 0) } }),
-  useTransform: () => 0,
-  useMotionValue: (v: number) => ({ set: vi.fn(), get: vi.fn(() => v), on: vi.fn(() => vi.fn()) }),
-  useSpring: (v: unknown) => v,
 }))
 
 import Hero from '@/components/Hero'
@@ -34,13 +30,18 @@ describe('Hero', () => {
 
   it('renders CTA buttons', () => {
     render(<Hero />)
-    expect(screen.getByRole('link', { name: /Ver Projetos/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Contato/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Ver projetos/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Entrar em contato/i })).toBeInTheDocument()
   })
 
-  it('renders social links', () => {
+  it('renders stats', () => {
+    render(<Hero />)
+    expect(screen.getAllByText('57+').length).toBeGreaterThan(0)
+    expect(screen.getByText(/Repositórios no GitHub/i)).toBeInTheDocument()
+  })
+
+  it('renders GitHub link', () => {
     render(<Hero />)
     expect(screen.getByLabelText('GitHub')).toBeInTheDocument()
-    expect(screen.getByLabelText('LinkedIn')).toBeInTheDocument()
   })
 })
