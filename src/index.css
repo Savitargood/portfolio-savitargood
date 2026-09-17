@@ -52,6 +52,20 @@
 
   .tag-chip {
     @apply px-2.5 py-1 text-[11px] font-medium rounded-md border border-ink-border
-           bg-white/[0.03] text-slate-400;
+           bg-white/[0.03] text-slate-400 transition-all duration-200
+           hover:border-accent/50 hover:text-accent hover:bg-accent/5
+           hover:-translate-y-0.5 cursor-default;
   }
+}
+
+@layer utilities {
+  .animate-tilt {
+    animation: tilt 8s ease-in-out infinite;
+  }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(0.6deg); }
+  75%      { transform: rotate(-0.6deg); }
 }

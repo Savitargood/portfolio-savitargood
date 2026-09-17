@@ -40,7 +40,9 @@ export default function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-slate-400 hover:text-white text-[13px] font-medium transition-colors duration-200"
+                className="relative text-slate-400 hover:text-white text-[13px] font-medium transition-colors duration-200
+                           after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-accent
+                           after:transition-all after:duration-300 hover:after:w-full"
               >
                 {l.label}
               </a>

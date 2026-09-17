@@ -1,6 +1,35 @@
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { MapPin, Globe, ArrowUpRight } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/BrandIcons'
+
+function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+    const duration = 1400
+    const start = performance.now()
+    let raf: number
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - p, 3)
+      setValue(Math.round(eased * target))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [inView, target])
+
+  return (
+    <span ref={ref}>
+      {value}
+      {suffix}
+    </span>
+  )
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -12,9 +41,9 @@ const fadeUp = {
 }
 
 const stats = [
-  { value: '5',   label: 'Repositórios no GitHub' },
-  { value: '57+', label: 'Contribuições em 2026' },
-  { value: '2',   label: 'Projetos em produção' },
+  { value: 5,  suffix: '',  label: 'Repositórios no GitHub' },
+  { value: 57, suffix: '+', label: 'Contribuições em 2026' },
+  { value: 2,  suffix: '',  label: 'Projetos em produção' },
 ]
 
 export default function Hero() {
@@ -82,14 +111,17 @@ export default function Hero() {
             >
               <a
                 href="#projects"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-accent text-ink text-[13px] font-bold hover:bg-accent-dim transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-accent text-ink text-[13px] font-bold
+                           hover:bg-accent-dim hover:shadow-[0_0_24px_-4px_rgba(76,195,247,0.6)] active:scale-95
+                           transition-all duration-200"
               >
                 Ver projetos
                 <ArrowUpRight size={14} strokeWidth={2.5} />
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg border border-ink-border bg-white/[0.03] text-slate-200 text-[13px] font-semibold hover:border-accent/40 hover:text-white transition-colors duration-200"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg border border-ink-border bg-white/[0.03] text-slate-200 text-[13px] font-semibold
+                           hover:border-accent/40 hover:text-white active:scale-95 transition-all duration-200"
               >
                 Entrar em contato
               </a>
@@ -98,7 +130,8 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-ink-border bg-white/[0.03] text-slate-400 hover:text-accent hover:border-accent/40 transition-colors duration-200"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-ink-border bg-white/[0.03] text-slate-400
+                           hover:text-accent hover:border-accent/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
               >
                 <GithubIcon size={16} />
               </a>
@@ -127,16 +160,20 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
-            className="relative mx-auto w-full max-w-[320px]"
+            className="relative mx-auto w-full max-w-[320px] animate-tilt"
           >
-            <div className="relative rounded-2xl border border-accent/25 overflow-hidden shadow-[0_0_60px_-15px_rgba(76,195,247,0.35)]">
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              className="relative rounded-2xl border border-accent/25 overflow-hidden shadow-[0_0_60px_-15px_rgba(76,195,247,0.35)] hover:shadow-[0_0_80px_-10px_rgba(76,195,247,0.55)] transition-shadow duration-500"
+            >
               <img
                 src="/profile.jpg"
                 alt="Silas Victor Oliveira Campos"
-                className="w-full aspect-[4/5] object-cover grayscale"
+                className="w-full aspect-[4/5] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-            </div>
+            </motion.div>
 
             {/* Floating badges */}
             <motion.div
@@ -188,10 +225,17 @@ export default function Hero() {
           className="mt-20 pt-10 border-t border-ink-border/70 grid grid-cols-3 gap-6"
         >
           {stats.map(s => (
-            <div key={s.label}>
-              <p className="font-serif text-3xl sm:text-4xl font-extrabold text-accent">{s.value}</p>
+            <motion.div
+              key={s.label}
+              whileHover={{ y: -4 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+              className="cursor-default"
+            >
+              <p className="font-serif text-3xl sm:text-4xl font-extrabold text-accent">
+                <CountUp target={s.value} suffix={s.suffix} />
+              </p>
               <p className="mt-1 text-xs text-slate-500">{s.label}</p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>

@@ -15,7 +15,7 @@ const fadeUp = {
 const contactRows = [
   { icon: Mail,     label: 'silasvictor90oliveira@gmail.com', href: 'mailto:silasvictor90oliveira@gmail.com' },
   { icon: Phone,    label: '(61) 98354-6385',                 href: 'https://wa.me/5561983546385' },
-  { icon: LinkedinIcon, label: 'linkedin.com/in/silas-victor', href: 'https://linkedin.com/in/silas-victor' },
+  { icon: LinkedinIcon, label: 'linkedin.com/in/silas-victor-1578531ab', href: 'https://www.linkedin.com/in/silas-victor-1578531ab/' },
   { icon: GithubIcon,   label: 'github.com/Savitargood',       href: 'https://github.com/Savitargood' },
 ]
 
@@ -226,7 +226,7 @@ export default function Contact() {
 
             <p className="text-center text-[11px] text-slate-600">
               Também pode me chamar diretamente pelo{' '}
-              <a href="https://linkedin.com/in/silas-victor" target="_blank" rel="noopener noreferrer" className="text-accent/80 hover:text-accent underline underline-offset-2">
+              <a href="https://www.linkedin.com/in/silas-victor-1578531ab/" target="_blank" rel="noopener noreferrer" className="text-accent/80 hover:text-accent underline underline-offset-2">
                 LinkedIn
               </a>{' '}
               ou{' '}
