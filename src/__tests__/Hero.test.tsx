@@ -25,8 +25,8 @@ import Hero from '@/components/Hero'
 describe('Hero', () => {
   it('renders the developer name', () => {
     render(<Hero />)
-    expect(screen.getByText(/Silas/i)).toBeInTheDocument()
-    expect(screen.getByText(/Victor/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/Silas/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/Victor/i)).toBeInTheDocument()
   })
 
   it('renders CTA buttons', () => {
