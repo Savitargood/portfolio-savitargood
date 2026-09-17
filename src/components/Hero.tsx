@@ -46,6 +46,26 @@ const stats = [
   { value: 2,  suffix: '',  label: 'Projetos em produção' },
 ]
 
+function AnimatedText({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
+  return (
+    <span className={`inline-block ${className}`} aria-label={text}>
+      {text.split('').map((ch, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="inline-block will-change-transform"
+          initial={{ opacity: 0, y: 34, rotateX: -70 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{ delay: delay + i * 0.045, type: 'spring', stiffness: 320, damping: 20 }}
+          whileHover={{ y: -6, scale: 1.12, transition: { type: 'spring', stiffness: 500, damping: 12 } }}
+        >
+          {ch === ' ' ? '\u00A0' : ch}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
 export default function Hero() {
   return (
     <section id="hero" className="relative pt-32 pb-16 overflow-hidden">
@@ -73,11 +93,20 @@ export default function Hero() {
               animate="visible"
               custom={1}
               variants={fadeUp}
-              className="mt-6 font-serif text-5xl sm:text-6xl leading-[1.05] font-extrabold text-white"
+              className="mt-6 font-serif text-5xl sm:text-6xl leading-[1.05] font-extrabold text-white [perspective:600px]"
             >
-              Silas <span className="text-accent">Victor</span>
+              <AnimatedText text="Silas " delay={0.35} />
+              <AnimatedText
+                text="Victor"
+                delay={0.35 + 'Silas '.length * 0.045}
+                className="text-accent drop-shadow-[0_0_18px_rgba(76,195,247,0.45)]"
+              />
               <br />
-              <span className="italic font-medium text-slate-500">Oliveira Campos</span>
+              <AnimatedText
+                text="Oliveira Campos"
+                delay={0.85}
+                className="italic font-medium text-slate-500"
+              />
             </motion.h1>
 
             <motion.p
