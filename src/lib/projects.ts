@@ -21,7 +21,7 @@ export const projects: Project[] = [
     tags: ['React', 'TypeScript', 'Supabase', 'OpenAI'],
     github: 'https://github.com/Savitargood/jarvis-ai-assistant',
     live: 'https://savitargood.github.io/jarvis-ai-assistant/',
-    image: '/projects/jarvis.jpg',
+    image: 'projects/jarvis.jpg',
     status: 'Online',
     accentTitle: true,
   },
@@ -33,19 +33,8 @@ export const projects: Project[] = [
       'Plataforma web para pet shop com catálogo de produtos, serviços de banho e tosa, farmácia veterinária e agendamento. Interface responsiva focada na experiência do cliente.',
     tags: ['React', 'TypeScript', 'Tailwind CSS'],
     github: 'https://github.com/Savitargood/Agropet.Recanto',
-    image: '/projects/agropet.jpg',
+    image: 'projects/agropet.jpg',
     status: 'Online',
-  },
-  {
-    id: 'finance-buddy',
-    title: 'Finance Buddy Check-in',
-    category: 'Web App · Finanças Pessoais',
-    description:
-      'Aplicação de controles e acompanhamento financeiro pessoal com sistema de check-in de metas. Permite ao usuário registrar gastos, refleções e acompanhar o progresso financeiro de forma visual e intuitiva.',
-    tags: ['JavaScript', 'React'],
-    image: '/projects/finance-buddy.jpg',
-    status: 'Ativo',
-    accentTitle: true,
   },
   {
     id: 'uninex',
@@ -56,7 +45,7 @@ export const projects: Project[] = [
     tags: ['JavaScript', 'React', 'Node.js'],
     github: 'https://github.com/Savitargood/UniNex-net',
     live: 'https://unirnex-netfacudade.lovable.app',
-    image: '/projects/uninex.jpg',
+    image: 'projects/uninex.jpg',
     status: 'Online',
   },
   {
@@ -67,7 +56,7 @@ export const projects: Project[] = [
       'Sistema web para otimização, gestão e controle de serviços de infraestrutura e logística de transportes. Primeiro Webview do projeto — interfaces responsivas com foco na eficiência dos fluxos de locomoção.',
     tags: ['JavaScript', 'React', 'Python'],
     github: 'https://github.com/Savitargood/-RENOVA-SVA-PLATAFORMA-DE-INFRAESTRUTURA-E-SERVI-OS-DE-LOCOMO-O',
-    image: '/projects/locomocao.jpg',
+    image: 'projects/locomocao.jpg',
     status: 'Em desenvolvimento',
   },
   {
@@ -79,7 +68,7 @@ export const projects: Project[] = [
     tags: ['JavaScript', 'React'],
     github: 'https://github.com/Savitargood/Financias_Contabeis',
     live: 'https://financias-contabeis.lovable.app',
-    image: '/projects/financas-contabeis.jpg',
+    image: 'projects/financas-contabeis.jpg',
     status: 'Ativo',
   },
   {
@@ -91,7 +80,7 @@ export const projects: Project[] = [
     tags: ['Python', 'Git', 'Terminal'],
     github: 'https://github.com/Savitargood/topocart-ghostly-tech',
     live: 'https://topocart-ghostly-tech.lovable.app',
-    image: '/projects/topocart.jpg',
+    image: 'projects/topocart.jpg',
     status: 'Online',
   },
   {
@@ -103,7 +92,7 @@ export const projects: Project[] = [
     tags: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite', 'GitHub Actions'],
     github: 'https://github.com/Savitargood/bellamassa',
     live: 'https://savitargood.github.io/bellamassa/',
-    image: '/projects/bellamassa.jpg',
+    image: 'projects/bellamassa.jpg',
     accentTitle: true,
   },
   {
@@ -113,7 +102,7 @@ export const projects: Project[] = [
     description:
       'Plataforma web completa para nutricionista Clássia Prado com agendamento de consultas, prescrições online, portal de biblioteca de programas nutricionais personalizados e integração direta com WhatsApp e Instagram. 100% otimizada para mobile.',
     tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
-    image: '/projects/casprinutri.jpg',
+    image: 'projects/casprinutri.jpg',
     status: 'Ativo',
   },
   {
@@ -123,7 +112,7 @@ export const projects: Project[] = [
     description:
       'Plataforma web completa de gestão condominial com controle de portaria, registro de correspondências e sistema de avisos e moradores. Arquitetura do zero e publicação em produção para uma empresa de setor imobiliário.',
     tags: ['React', 'Node.js', 'PHP', 'Git'],
-    image: '/projects/gestao-condominial.jpg',
+    image: 'projects/gestao-condominial.jpg',
     status: 'Interno',
     accentTitle: true,
   },

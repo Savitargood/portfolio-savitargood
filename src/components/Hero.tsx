@@ -41,9 +41,9 @@ const fadeUp = {
 }
 
 const stats = [
-  { value: 5,  suffix: '',  label: 'Repositórios no GitHub' },
+  { value: 8,  suffix: '',  label: 'Repositórios no GitHub' },
   { value: 57, suffix: '+', label: 'Contribuições em 2026' },
-  { value: 2,  suffix: '',  label: 'Projetos em produção' },
+  { value: 9,  suffix: '',  label: 'Projetos desenvolvidos' },
 ]
 
 function AnimatedText({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
@@ -197,7 +197,7 @@ export default function Hero() {
               className="relative rounded-2xl border border-accent/25 overflow-hidden shadow-[0_0_60px_-15px_rgba(76,195,247,0.35)] hover:shadow-[0_0_80px_-10px_rgba(76,195,247,0.55)] transition-shadow duration-500"
             >
               <img
-                src="/profile.jpg"
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
                 alt="Silas Victor Oliveira Campos"
                 className="w-full aspect-[4/5] object-cover"
               />
@@ -235,7 +235,7 @@ export default function Hero() {
                 className="px-3 py-2 rounded-xl bg-ink-panel/95 border border-accent/30 shadow-[0_0_20px_-6px_rgba(76,195,247,0.4)] text-center cursor-default"
               >
                 <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Projetos</p>
-                <p className="font-serif text-lg font-bold text-accent leading-tight">5</p>
+                <p className="font-serif text-lg font-bold text-accent leading-tight">9</p>
               </motion.div>
             </motion.div>
 

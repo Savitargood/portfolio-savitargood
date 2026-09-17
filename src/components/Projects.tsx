@@ -70,7 +70,7 @@ export default function Projects() {
               {/* Image */}
               <div className="relative h-40 overflow-hidden">
                 <img
-                  src={project.image}
+                  src={`${import.meta.env.BASE_URL}${project.image}`}
                   alt={project.title}
                   loading="lazy"
                   className="w-full h-full object-cover saturate-[0.85] group-hover:saturate-125

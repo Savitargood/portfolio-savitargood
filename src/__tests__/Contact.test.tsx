@@ -32,8 +32,10 @@ describe('Contact form', () => {
     expect(screen.getByLabelText(/Mensagem/i)).toBeInTheDocument()
   })
 
-  it('shows success message on successful submit', async () => {
-    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ok: true }) })
+  it('shows success message when GitHub dispatch returns 204', async () => {
+    vi.stubEnv('VITE_CONTACT_REPO', 'test/repo')
+    vi.stubEnv('VITE_GITHUB_CONTACT_TOKEN', 'test-token')
+    global.fetch = vi.fn().mockResolvedValue({ status: 204, ok: true })
 
     render(<Contact />)
     fireEvent.change(screen.getByLabelText(/Nome/i), { target: { value: 'Silas' } })
@@ -46,11 +48,10 @@ describe('Contact form', () => {
     })
   })
 
-  it('shows error message on failed submit', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: false,
-      json: async () => ({ error: 'Falha ao enviar e-mail' }),
-    })
+  it('falls back to mailto when dispatch fails', async () => {
+    vi.stubEnv('VITE_CONTACT_REPO', 'test/repo')
+    vi.stubEnv('VITE_GITHUB_CONTACT_TOKEN', 'test-token')
+    global.fetch = vi.fn().mockRejectedValue(new Error('network error'))
 
     render(<Contact />)
     fireEvent.change(screen.getByLabelText(/Nome/i), { target: { value: 'Silas' } })
@@ -59,7 +60,7 @@ describe('Contact form', () => {
     fireEvent.click(screen.getByRole('button', { name: /Enviar/i }))
 
     await waitFor(() => {
-      expect(screen.getByText(/Falha ao enviar/i)).toBeInTheDocument()
+      expect(screen.getByText(/Abrindo seu e-mail/i)).toBeInTheDocument()
     })
   })
 })

@@ -34,21 +34,37 @@ export default function Contact() {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
+
+    const repo = import.meta.env.VITE_CONTACT_REPO as string | undefined
+    const token = import.meta.env.VITE_GITHUB_CONTACT_TOKEN as string | undefined
+
+    // Envia via GitHub repository_dispatch -> workflow cria uma Issue no repo
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data.error ?? 'Erro ao enviar mensagem')
+      if (!repo || !token) {
+        throw new Error('fallback')
       }
+      const res = await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_type: 'contact-form',
+          client_payload: { ...form, sent_at: new Date().toISOString() },
+        }),
+      })
+      if (res.status !== 204) throw new Error('fallback')
       setStatus('success')
       setForm({ name: '', email: '', message: '' })
-    } catch (err) {
+    } catch {
+      // Sem token configurado ou falha — abre o e-mail como fallback
+      const subject = encodeURIComponent(`[Portfólio] Contato de ${form.name}`)
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`)
+      window.location.href = `mailto:silasvictor90oliveira@gmail.com?subject=${subject}&body=${body}`
       setStatus('error')
-      setErrorMsg(err instanceof Error ? err.message : 'Erro desconhecido')
+      setErrorMsg('Abrindo seu e-mail para enviar a mensagem...')
     }
   }
 
