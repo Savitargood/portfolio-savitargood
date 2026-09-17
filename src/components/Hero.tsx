@@ -177,33 +177,60 @@ export default function Hero() {
 
             {/* Floating badges */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -left-8 top-6 px-3 py-2 rounded-xl bg-ink-panel/95 border border-ink-border shadow-xl"
+              initial={{ opacity: 0, scale: 0, x: -30 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 0.8, type: 'spring', stiffness: 260, damping: 14 }}
+              whileHover={{ scale: 1.12, rotate: -2 }}
+              className="absolute -left-8 top-6"
             >
-              <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Contribuições</p>
-              <p className="font-serif text-lg font-bold text-accent leading-tight">57+</p>
+              <motion.div
+                animate={{ y: [0, -8, 0], rotate: [0, -1.5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="px-3 py-2 rounded-xl bg-ink-panel/95 border border-accent/30 shadow-[0_0_20px_-6px_rgba(76,195,247,0.4)] cursor-default"
+              >
+                <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Contribuições</p>
+                <p className="font-serif text-lg font-bold text-accent leading-tight">57+</p>
+              </motion.div>
             </motion.div>
 
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              className="absolute -right-5 top-1/3 px-3 py-2 rounded-xl bg-ink-panel/95 border border-ink-border shadow-xl text-center"
+              initial={{ opacity: 0, scale: 0, x: 30 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 14 }}
+              whileHover={{ scale: 1.12, rotate: 2 }}
+              className="absolute -right-5 top-1/3"
             >
-              <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Projetos</p>
-              <p className="font-serif text-lg font-bold text-accent leading-tight">5</p>
+              <motion.div
+                animate={{ y: [0, 8, 0], rotate: [0, 1.5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                className="px-3 py-2 rounded-xl bg-ink-panel/95 border border-accent/30 shadow-[0_0_20px_-6px_rgba(76,195,247,0.4)] text-center cursor-default"
+              >
+                <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Projetos</p>
+                <p className="font-serif text-lg font-bold text-accent leading-tight">5</p>
+              </motion.div>
             </motion.div>
 
             <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute -left-4 bottom-8 px-3 py-2 rounded-xl bg-ink-panel/95 border border-ink-border shadow-xl"
+              initial={{ opacity: 0, scale: 0, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 1.2, type: 'spring', stiffness: 260, damping: 14 }}
+              whileHover={{ scale: 1.12 }}
+              className="absolute -left-4 bottom-8"
             >
-              <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                Disponível
-              </p>
-              <p className="text-[9px] text-slate-500 mt-0.5">5+ anos comprometido</p>
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                className="px-3 py-2 rounded-xl bg-ink-panel/95 border border-emerald-400/30 shadow-[0_0_20px_-6px_rgba(52,211,153,0.35)] cursor-default"
+              >
+                <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-300">
+                  <span className="relative flex w-1.5 h-1.5">
+                    <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                    <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  </span>
+                  Disponível
+                </p>
+                <p className="text-[9px] text-slate-500 mt-0.5">5+ anos comprometido</p>
+              </motion.div>
             </motion.div>
 
             {/* Carousel dots */}
