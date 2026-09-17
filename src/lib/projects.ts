@@ -13,6 +13,30 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'jarvis',
+    title: 'J.A.R.V.I.S. AI Assistant',
+    category: 'Web App · Inteligência Artificial',
+    description:
+      'Assistente de IA com voz, integração OpenAI via Supabase Edge Functions, autenticação Google/email e interface futurista estilo HUD. Converse por texto ou voz e receba respostas em tempo real.',
+    tags: ['React', 'TypeScript', 'Supabase', 'OpenAI'],
+    github: 'https://github.com/Savitargood/jarvis-ai-assistant',
+    live: 'https://savitargood.github.io/jarvis-ai-assistant/',
+    image: '/projects/jarvis.jpg',
+    status: 'Online',
+    accentTitle: true,
+  },
+  {
+    id: 'agropet',
+    title: 'Agropet Recanto',
+    category: 'Website · Pet Shop',
+    description:
+      'Plataforma web para pet shop com catálogo de produtos, serviços de banho e tosa, farmácia veterinária e agendamento. Interface responsiva focada na experiência do cliente.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+    github: 'https://github.com/Savitargood/Agropet.Recanto',
+    image: '/projects/agropet.jpg',
+    status: 'Online',
+  },
+  {
     id: 'finance-buddy',
     title: 'Finance Buddy Check-in',
     category: 'Web App · Finanças Pessoais',
