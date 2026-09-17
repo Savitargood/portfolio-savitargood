@@ -36,7 +36,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: 'easeOut' },
+    transition: { delay: i * 0.12, duration: 0.6, ease: 'easeOut' as const },
   }),
 }
 
@@ -188,7 +188,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+            transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' as const }}
             className="relative mx-auto w-full max-w-[320px] animate-tilt"
           >
             <motion.div
